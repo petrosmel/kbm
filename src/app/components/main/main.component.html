@@ -1,3 +1,12 @@
 <main class="container">
-<app-card></app-card>
+  <app-search (onSearchTriggered)="showFilteredList($event)"></app-search>
+  <app-filters (onFilterSelected)="filterByCategory($event)"></app-filters>
+  <div class="row">
+    <div *ngFor="let source of cardsDataList$ | async; trackBy: trackByFn" class="col-md-4">
+      <app-card
+        [inputSource]="source"
+      ></app-card>
+    </div>
+  </div>
+  <app-pagination></app-pagination>
 </main>

@@ -11,9 +11,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.newsService.articlesSubject.getValue().length) {
-      this.newsService.getAllNews()
-    }
+    this.fetchSources();
   }
 
+  private fetchSources() {
+    this.newsService.getAllNewsSources()
+  }
 }

@@ -1,4 +1,7 @@
-<select [formControl]="filtersControl" name="filters">
+<div class="dropdown">
+  <button class="dropbtn">Filters</button>
+  <div class="dropdown-content">
+    <a *ngFor="let filter of filters" (click)="filterSelected(filter)">{{filter}}</a>
+  </div>
+</div>
 
-  <option value="volvo">Volvo</option>
-</select>

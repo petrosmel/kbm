@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {IArticle} from "../../../models/get-all-news-response.models";
+import {ISource} from "../../../models/get-all-news-sources-response.interface";
 
 @Component({
   selector: 'app-card',
@@ -7,5 +7,5 @@ import {IArticle} from "../../../models/get-all-news-response.models";
   styleUrls: ['./card.component.css']
 })
 export class CardComponent {
-  @Input() article: IArticle | undefined;
+  @Input() inputSource: ISource | undefined;
 }

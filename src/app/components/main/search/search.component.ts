@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {BaseComponent} from "../../shared/base/base.component";
-import {debounceTime, takeUntil} from "rxjs";
+import {debounceTime, filter, takeUntil} from "rxjs";
+import {NewsService} from "../../../service/news.service";
+import {ISource} from "../../../models/get-all-news-sources-response.interface";
 
 @Component({
   selector: 'app-search',
@@ -9,9 +11,12 @@ import {debounceTime, takeUntil} from "rxjs";
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent extends BaseComponent implements OnInit {
+  @Output() onSearchTriggered = new EventEmitter<ISource[] | null>();
   searchControl = new FormControl<string | null>("");
 
-  constructor() {
+  constructor(
+    private readonly newsService: NewsService
+  ) {
     super();
   }
 
@@ -24,6 +29,13 @@ export class SearchComponent extends BaseComponent implements OnInit {
       .pipe(
         debounceTime(300),
         takeUntil(this.destroyed))
-      .subscribe()
+      .subscribe((userInput: string | null) => {
+        const sources = this.newsService.sourcesSubject.getValue();
+        if (userInput) {
+          this.onSearchTriggered.emit(sources.filter(source => source.name.toLowerCase().includes(String(userInput?.toLowerCase()))))
+        } else {
+          this.onSearchTriggered.emit(null)
+        }
+      })
   }
 }
