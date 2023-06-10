@@ -1,1 +1,22 @@
-<p>user-bar works!</p>
+<nav class="bg-primary text-center  text-md-end">
+  <button
+    *ngIf="(userLoginSubject$ | async)===false else logout"
+    class="btn btn-primary"
+    (click)="userLoginLogout(true)"><i class="fa-solid fa-user"></i> Login
+  </button>
+</nav>
+
+<ng-template #logout>
+  <div class="dropdown">
+    <button class="dropbtn btn"><span
+      class="rounded-circle bg-secondary border border-1 border-white p-1">{{user | initials}}</span>
+      Hi {{user.firstname}}</button>
+    <div class="dropdown-content">
+      <a class="btn"href="#">Settings</a>
+      <a class="btn" (click)="userLoginLogout()">Logout</a>
+    </div>
+  </div>
+</ng-template>
+
+
+

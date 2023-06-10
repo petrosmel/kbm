@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {IArticle} from "../../../models/get-all-news-response.models";
 
 @Component({
   selector: 'app-card',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent {
-
+  @Input() article: IArticle | undefined;
 }

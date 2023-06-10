@@ -1,1 +1,16 @@
-<p>pagination works!</p>
+<div class="pagination__container">
+  <div class="pagination__button pagination__page-previous"
+       (click)="onPreviousPage()"
+  >
+    Previous
+  </div>
+  <div class="pagination__page-active">
+    <input class="pagination__current-page" (input)="onSetPage($event)" [value]="currentPage"> /
+    <span>{{allPagesNumber}}</span>
+  </div>
+  <div class="pagination__button pagination__page-next"
+       (click)="onNextPage()"
+  >
+    Next
+  </div>
+</div>
