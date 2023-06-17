@@ -1,20 +1,14 @@
 <footer class="container small-text">
   <hr>
-  <div class="row">
-    <div class="col-12 col-md-4 text-center text-md-start"><p class="text-muted">Copyrights Creative Workers</p></div>
+  <div class="row d-flex align-items-center">
+    <div class="col-12 col-md-4 text-center text-md-start"><p class=" mb-0 text-muted">Copyrights Creative Workers</p>
+    </div>
     <div class="col-12 col-md-4 text-center  nav justify-content-center">
       <ul class="nav align-content-center">
-        <li class="btn p-0 m-0"><a href="http://www.google.com" target="_blank"
-                                   class="nav-link px-2 text-muted">Privacy</a>
-        </li>
-        <li class="btn p-0 m-0"><a href="http://www.google.com" target="_blank"
-                                   class="nav-link px-2 text-muted">Terms</a>
-        </li>
-        <li class="btn p-0 m-0"><a href="http://www.google.com" target="_blank"
-                                   class="nav-link px-2 text-muted">Cookies</a>
-        </li>
-        <li class="btn p-0 m-0"><a href="http://www.google.com" target="_blank"
-                                   class="nav-link px-2 text-muted">More</a>
+        <li
+          *ngFor="let label of menuLabels"
+          class="btn p-0 m-0">
+          <a href="http://www.google.com" target="_blank" class="nav-link p-0 m-0 px-2 text-muted">{{label}}</a>
         </li>
       </ul>
     </div>

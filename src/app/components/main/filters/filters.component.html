@@ -1,7 +1,10 @@
-<div class="dropdown">
-  <button class="dropbtn">Filters</button>
-  <div class="dropdown-content">
-    <a *ngFor="let filter of filters" (click)="filterSelected(filter)">{{filter}}</a>
-  </div>
-</div>
+<select
+  [formControl]="filterControl"
+  name="filter"
+  class="form-select rounded-pill"
+>
+  <option selected>{{dropdownPlaceholder}}</option>
+  <option class="btn text-start" value="{{filter}}" *ngFor="let filter of filters">
+    {{filter}}</option>
+</select>
 

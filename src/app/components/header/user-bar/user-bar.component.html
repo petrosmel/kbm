@@ -1,22 +1,21 @@
-<nav class="bg-primary text-center  text-md-end">
+<div class="bg-primary text-center text-md-end">
   <button
-    *ngIf="(userLoginSubject$ | async)===false else logout"
+    *ngIf="(userLoginSubject$ | async)===false && (userLoginLoaderSubject$ | async)===false"
     class="btn btn-primary"
     (click)="userLoginLogout(true)"><i class="fa-solid fa-user"></i> Login
   </button>
-</nav>
-
-<ng-template #logout>
-  <div class="dropdown">
+  <app-loading-indicator *ngIf="userLoginLoaderSubject$ | async"></app-loading-indicator>
+  <div
+    *ngIf="(userLoginSubject$ | async) && (userLoginLoaderSubject$ | async)===false"
+    class="dropdown">
     <button class="dropbtn btn"><span
-      class="rounded-circle bg-secondary border border-1 border-white p-1">{{user | initials}}</span>
+      class="rounded-circle bg-secondary border border-1 border-white p-1 small">{{user | initials}}</span>
       Hi {{user.firstname}}</button>
     <div class="dropdown-content">
-      <a class="btn"href="#">Settings</a>
+      <a class="btn" href="#">Settings</a>
       <a class="btn" (click)="userLoginLogout()">Logout</a>
     </div>
   </div>
-</ng-template>
-
+</div>
 
 

@@ -1,16 +1,20 @@
-<div class="pagination__container">
-  <div class="pagination__button pagination__page-previous"
-       (click)="onPreviousPage()"
-  >
-    << Previous
-  </div>
-  <div class="pagination__page-active">
-    <input class="pagination__current-page" (input)="onSetPage($event)" [value]="currentPage"> /
-    <span>{{allPagesNumber}}</span>
-  </div>
-  <div class="pagination__button pagination__page-next"
-       (click)="onNextPage()"
-  >
-    Next >>
-  </div>
+  <div class="justify-content-center">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link btn" (click)="onFirstPageClicked()"><i class="fa-duotone fa-angles-left"></i></a>
+    </li>
+    <li class="page-item"><a class="page-link btn" (click)="onPreviousPageClicked()"><i class="fa-solid fa-angle-left"></i></a>
+    </li>
+    <li class="page-item text-center">
+      <input
+        (blur)="onInputBlur($event)"
+        size="{{inputSize}}"
+        [formControl]="paginationInputControl"
+        type="text"
+        class="page-link d-inline-block text-center border border-1 border-white px-0 mx-0"
+       ><span class="text-primary px-2"> / {{totalPaginationPages}} </span></li>
+    <li class="page-item"><a class="page-link btn" (click)="onNextPageClicked()"><i class="fa-regular fa-angle-right"></i></a>
+    </li>
+    <li class="page-item"><a class="page-link btn" (click)="onLastPageClicked()"><i class="fa-duotone fa-angles-right"></i></a>
+    </li>
+  </ul>
 </div>

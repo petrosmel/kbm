@@ -1,20 +1,20 @@
 import {Component} from '@angular/core';
 import {BaseComponent} from "../shared/base/base.component";
 import {NewsService} from "../../service/news.service";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {ISource} from "../../models/get-all-news-sources-response.interface";
-
-interface Oninit {
-}
+import {ICallStatus} from "../../models/call-status.model";
 
 @Component({
   selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  templateUrl: './main.component.html'
 })
-export class MainComponent extends BaseComponent implements Oninit {
-  sourcesSubject$: Observable<ISource[]> = this.newsService.sourcesSubject$;
-  cardsDataList$: Observable<ISource[]> = of([]);
+export class MainComponent extends BaseComponent {
+  sourcesSubject$: Observable<ISource[] | null> = this.newsService.sourcesSubject$;
+  sourcesCallStatusSubject$: Observable<ICallStatus> = this.newsService.sourcesCallStatusSubject$;
+  activePage: number = 1;
+  elementsPerPage: number = this.newsService.paginationElementsPerPage;
+  skeletonArray = new Array(3);
 
   constructor(
     private readonly newsService: NewsService
@@ -22,13 +22,6 @@ export class MainComponent extends BaseComponent implements Oninit {
     super();
   }
 
-  ngOnInit() {
-    this.setInitialValue();
-  }
-
-  private setInitialValue() {
-    this.cardsDataList$ = this.sourcesSubject$;
-  }
 
   trackByFn(index: number) {
     return index;
@@ -36,18 +29,24 @@ export class MainComponent extends BaseComponent implements Oninit {
 
   showFilteredList(input: ISource[] | null) {
     if (input) {
-      this.cardsDataList$ = of(input)
+      this.newsService.updateSourcesSubject(input);
     } else {
-      this.cardsDataList$ = this.sourcesSubject$;
+      this.newsService.setInitialSourcesArray();
     }
   }
 
   filterByCategory(input: string | null) {
     let filteredArray: ISource[] = []
     if (input) {
-      const sources: ISource[] = this.newsService.sourcesSubject.getValue();
-      filteredArray = sources.filter(source => source.category.toLowerCase() === (String(input?.toLowerCase())));
+      const sources: ISource[] | null = this.newsService.getInitialSourcesArray();
+      filteredArray = (sources as ISource[]).filter(source => source.category.toLowerCase() === (String(input?.toLowerCase())));
+      this.newsService.updateSourcesSubject(filteredArray);
     } else {
+      this.newsService.setInitialSourcesArray();
     }
+  }
+
+  onPageChanged(page: number) {
+    this.activePage = page
   }
 }

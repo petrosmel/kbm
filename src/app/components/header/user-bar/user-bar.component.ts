@@ -9,14 +9,13 @@ import {NewsService} from "../../../service/news.service";
 })
 export class UserBarComponent {
   userLoginSubject$ = this.newsService.userLoginSubject$;
+  userLoginLoaderSubject$ = this.newsService.userLoginLoaderSubject$;
 
   constructor(
     private readonly newsService: NewsService
-  ) {
+  ) {}
 
-  }
-
-  @Input() user: IUser = {firstname: "Random", lastname: "User"}
+  @Input() user: IUser = {firstname: "Random", lastname: "User"};
 
   userLoginLogout(isLogin: boolean = false) {
     this.newsService.userLoginLogout(isLogin);

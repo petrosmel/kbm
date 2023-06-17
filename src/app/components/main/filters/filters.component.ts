@@ -7,12 +7,13 @@ import {NewsService} from "../../../service/news.service";
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent extends BaseComponent implements OnInit {
-  @Output() onFilterSelected = new EventEmitter<string>();
-  filtersControl = new FormControl<string | null>("");
+  @Output() filterSelected = new EventEmitter<string>();
+  filterControl = new FormControl('Choose Category');
   filters: string[] = []
+  selectedFilter: string = "";
+  dropdownPlaceholder: string = "Choose Category";
 
   constructor(private readonly newsService: NewsService) {
     super();
@@ -23,19 +24,19 @@ export class FiltersComponent extends BaseComponent implements OnInit {
     this.subscribeToValueChanges();
   }
 
-  private getFilters() {
-    this.filters = this.newsService.getFilters();
-  }
-
   private subscribeToValueChanges() {
-    this.filtersControl.valueChanges
+    this.filterControl.valueChanges
       .pipe(
         debounceTime(300),
         takeUntil(this.destroyed))
-      .subscribe()
+      .subscribe((userInput: string | null) => {
+        const value: string | null = userInput !== this.dropdownPlaceholder ? String(userInput) : "";
+        this.selectedFilter = value;
+        this.filterSelected.emit(value)
+      })
   }
 
-  filterSelected(input: string | null) {
-    this.onFilterSelected.emit(String(input))
+  private getFilters() {
+    this.filters = this.newsService.getFilters();
   }
 }

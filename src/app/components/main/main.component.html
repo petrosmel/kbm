@@ -1,12 +1,26 @@
 <main class="container">
-  <app-search (onSearchTriggered)="showFilteredList($event)"></app-search>
-  <app-filters (onFilterSelected)="filterByCategory($event)"></app-filters>
-  <div class="row">
-    <div *ngFor="let source of cardsDataList$ | async; trackBy: trackByFn" class="col-md-4">
-      <app-card
-        [inputSource]="source"
-      ></app-card>
+  <div class="d-flex" *ngIf="(sourcesCallStatusSubject$ | async)?.loading">
+    <div *ngFor="let _ of skeletonArray" class="col-4">
+      <app-card-loader></app-card-loader>
     </div>
   </div>
-  <app-pagination></app-pagination>
+
+  <ng-container *ngIf="(sourcesCallStatusSubject$ | async)?.success">
+    <div class="row justify-content-center justify-content-md-end py-2">
+      <div class="col-12 col-md-3 m-2 m-md-0">
+        <app-search (onSearchTriggered)="showFilteredList($event)"></app-search>
+      </div>
+      <div class="col-12 col-md-3 pb-2">
+        <app-filters (filterSelected)="filterByCategory($event)"></app-filters>
+      </div>
+      <hr>
+    </div>
+    <div class="row">
+      <div *ngFor="let source of sourcesSubject$ | async | pagination:activePage:elementsPerPage; trackBy: trackByFn" class="col-md-4">
+        <app-card [inputSource]="source"></app-card>
+      </div>
+    </div>
+    <app-pagination (pageChanged)='onPageChanged($event)'></app-pagination>
+  </ng-container>
+  <app-error-indicator *ngIf="(sourcesCallStatusSubject$ | async)?.error"></app-error-indicator>
 </main>

@@ -18,6 +18,8 @@ import {PaginationComponent} from './components/main/pagination/pagination.compo
 import {InitialsPipe} from './pipes/initials.pipe';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { CardLoaderComponent } from './components/main/card/card-loader/card-loader.component';
+import { PaginationPipe } from './pipes/pagination.pipe';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import {HttpClientModule} from "@angular/common/http";
     FiltersComponent,
     CardComponent,
     PaginationComponent,
-    InitialsPipe
+    InitialsPipe,
+    CardLoaderComponent,
+    PaginationPipe
   ],
   imports: [
     BrowserModule,
